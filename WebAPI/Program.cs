@@ -1,9 +1,10 @@
+using DataAccess.Services.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
+builder.Services.LoadDataAccessServicesTypes();
 
 builder.Services.AddAuthentication(options =>
 {

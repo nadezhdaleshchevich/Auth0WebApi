@@ -1,3 +1,5 @@
+using DataAccess.Services.Interfaces;
+using DataAccess.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,15 +16,28 @@ namespace WebAPI.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly IUserService _userService;
+
+
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            IUserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
 
         [HttpGet]
         [Authorize]
-        public IEnumerable<WeatherForecast> Get()
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
+            await _userService.CreateUserAsync(new UserDto
+            {
+                Id = "dsfsdg",
+                UserName = "Nadezda"
+            });
+
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
