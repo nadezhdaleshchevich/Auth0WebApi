@@ -15,6 +15,7 @@ namespace DataAccess.Extensions
                 options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
             services.AddTransient<IUserContext, UserContext>();
+            services.AddTransient<ICompanyContext, CompanyContext>();
         }
     }
 }

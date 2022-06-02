@@ -4,9 +4,10 @@ namespace DataAccess.Services.Interfaces
 {
     public interface IUserService
     {
-        Task CreateUserAsync(UserDto userDto);
-        Task UpdateUserAsync(UserDto userDto);
-        Task DeleteUserAsync(string userId);
-        Task<UserDto> FindUserByIdAsync(string userId);
+        Task<UserDto> CreateUserAsync(UpdateUserDto userDto);
+        Task<UserDto> UpdateUserAsync(int userId, UpdateUserDto userDto);
+        Task DeleteUserAsync(int userId);
+        Task<UserDto?> FindUserByIdAsync(int userId);
+        Task<UserDto> FindUserByAuth0IdAsync(string userAuth0Id);
     }
 }

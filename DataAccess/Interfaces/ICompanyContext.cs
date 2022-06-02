@@ -3,9 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Interfaces
 {
-    public interface IUserContext : IAsyncEntityStorage
+    public interface ICompanyContext : IAsyncEntityStorage
     {
-        public DbSet<User> Users { get; }
         public DbSet<Company> Companies { get; }
     }
 }

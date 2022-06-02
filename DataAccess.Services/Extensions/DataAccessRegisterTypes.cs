@@ -15,6 +15,7 @@ namespace DataAccess.Services.Extensions
             services.LoadDataAccessTypes();
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICompanyService, CompanyService>();
 
             services.AddAutoMapper(cfg => cfg.AddMaps(new []
                 {
