@@ -28,57 +28,57 @@ namespace DataAccess.Services.Services
 
         public async Task<CompanyDto> CreateCompanyAsync(UpdateCompanyDto companyDto)
         {
-            var companyDb = _mapper.Map<DbCompany>(companyDto);
+            var dbCompany = _mapper.Map<DbCompany>(companyDto);
 
-            _context.Companies.Add(companyDb);
+            _context.Companies.Add(dbCompany);
 
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<CompanyDto>(companyDb);
+            return _mapper.Map<CompanyDto>(dbCompany);
         }
 
         public async Task<CompanyDto> UpdateCompanyAsync(int companyId, UpdateCompanyDto companyDto)
         {
             if (companyDto == null) throw new ArgumentNullException(nameof(companyDto));
 
-            var companyDb = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
+            var dbCompany = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
 
-            if (companyDb == null)
+            if (dbCompany == null)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            _mapper.Map(companyDto, companyDb);
+            _mapper.Map(companyDto, dbCompany);
 
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<CompanyDto>(companyDb);
+            return _mapper.Map<CompanyDto>(dbCompany);
         }
 
         public async Task DeleteCompanyAsync(int companyId)
         {
-            var companyDb = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
+            var dbCompany = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
 
-            if (companyDb == null)
+            if (dbCompany == null)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            _context.Companies.Remove(companyDb);
+            _context.Companies.Remove(dbCompany);
 
             await _context.SaveChangesAsync();
         }
 
         public async Task<CompanyDto> FindCompanyByIdCompanyAsync(int companyId)
         {
-            var companyDb = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
+            var dbCompany = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
 
-            if (companyDb == null)
+            if (dbCompany == null)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            return _mapper.Map<CompanyDto>(companyDb);
+            return _mapper.Map<CompanyDto>(dbCompany);
         }
     }
 }

@@ -29,72 +29,72 @@ namespace DataAccess.Services.Services
 
             if (dbUsers.Length != 0)
             {
-                throw new RequestedResourceNotFoundException();
+                throw new RequestedResourceHasConflictException();
             }
 
-            var userDb = _mapper.Map<DbUser>(userDto);
+            var dbUser = _mapper.Map<DbUser>(userDto);
 
-            _context.Users.Add(userDb);
+            _context.Users.Add(dbUser);
 
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<UserDto>(userDb);
+            return _mapper.Map<UserDto>(dbUser);
         }
 
         public async Task<UserDto> UpdateUserAsync(int userId, UpdateUserDto userDto)
         {
             if (userDto == null) throw new ArgumentNullException(nameof(userDto));
 
-            var userDb = await _context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(i => i.Id == userId);
 
-            if (userDb == null)
+            if (dbUser == null)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            _mapper.Map(userDto, userDb);
+            _mapper.Map(userDto, dbUser);
 
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<UserDto>(userDb);
+            return _mapper.Map<UserDto>(dbUser);
         }
 
         public async Task DeleteUserAsync(int userId)
         {
-            var userDb = await _context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(i => i.Id == userId);
 
-            if (userDb == null)
+            if (dbUser == null)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            _context.Users.Remove(userDb);
+            _context.Users.Remove(dbUser);
 
             await _context.SaveChangesAsync();
         }
 
         public async Task<UserDto> FindUserByIdAsync(int userId)
         {
-            var userDb = await _context.Users.FirstOrDefaultAsync(i => i.Id == userId);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(i => i.Id == userId);
 
-            if (userDb == null)
+            if (dbUser == null)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            return _mapper.Map<UserDto>(userDb);
+            return _mapper.Map<UserDto>(dbUser);
         }
 
         public async Task<UserDto> FindUserByAuth0IdAsync(string userAuth0Id)
         {
-            var userDb = await _context.Users.FirstOrDefaultAsync(i => i.Auth0Id == userAuth0Id);
+            var dbUser = await _context.Users.FirstOrDefaultAsync(i => i.Auth0Id == userAuth0Id);
 
-            if (userDb == null)
+            if (dbUser == null)
             {
                 throw new RequestedResourceNotFoundException();
             }
 
-            return _mapper.Map<UserDto>(userDb);
+            return _mapper.Map<UserDto>(dbUser);
         }
     }
 }
