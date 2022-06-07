@@ -35,7 +35,7 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => new { x.user_id, x.user_auth0_id });
+                    table.PrimaryKey("PK_users", x => x.user_id);
                     table.ForeignKey(
                         name: "FK_users_companies__user_company_id",
                         column: x => x._user_company_id,

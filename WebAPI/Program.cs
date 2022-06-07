@@ -1,22 +1,19 @@
+using DataAccess.Extensions;
 using DataAccess.Services.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSwaggerGen(options => options.LoadSwaggerGenOptions());
+
+builder.Services
+    .AddAuthentication(options => options.LoadAuthenticationOptions())
+    .AddJwtBearer(options => options.LoadJwtBearerOptions(builder.Configuration));
+
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
 
+builder.Services.LoadDataAccessTypes();
 builder.Services.LoadDataAccessServicesTypes();
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.Authority = builder.Configuration["Auth0:Domain"];
-    options.Audience = builder.Configuration["Auth0:Audience"];
-});
 
 var app = builder.Build();
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220607111351_InitDataBase")]
+    [Migration("20220607125223_InitDataBase")]
     partial class InitDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -56,6 +56,7 @@ namespace DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Auth0Id")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("user_auth0_id");
@@ -80,7 +81,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("_user_last_name");
 
-                    b.HasKey("Id", "Auth0Id");
+                    b.HasKey("Id");
 
                     b.HasIndex("Auth0Id")
                         .IsUnique();

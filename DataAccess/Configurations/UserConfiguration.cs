@@ -9,7 +9,7 @@ namespace DataAccess.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("users");
-            builder.HasKey(i => new {i.Id, i.Auth0Id});
+            builder.HasKey(i => i.Id);
             builder.HasIndex(i => i.Id);
             builder.HasIndex(i => i.Auth0Id).IsUnique();
             builder.HasOne(i => i.Company).WithMany(i => i.Users).HasForeignKey(i => i.CompanyId);

@@ -88,6 +88,13 @@ namespace WebAPI.Controllers
 
                 result = new OkObjectResult(userDto);
             }
+            catch (RequestedResourceHasConflictException)
+            {
+                result = new BadRequestObjectResult(new
+                {
+                    Message = "User already exists"
+                });
+            }
             catch (RequestedResourceNotFoundException)
             {
                 result = new NotFoundObjectResult(new

@@ -25,9 +25,9 @@ namespace DataAccess.Services.Services
         {
             if (userDto == null) throw new ArgumentNullException(nameof(userDto));
 
-            var dbUsers = await _context.Users.Where(i => i.Auth0Id == userDto.Auth0Id).ToArrayAsync();
+            var hasDbUser = await _context.Users.AnyAsync(i => i.Auth0Id == userDto.Auth0Id);
 
-            if (dbUsers.Length != 0)
+            if (hasDbUser)
             {
                 throw new RequestedResourceHasConflictException();
             }
@@ -50,6 +50,13 @@ namespace DataAccess.Services.Services
             if (dbUser == null)
             {
                 throw new RequestedResourceNotFoundException();
+            }
+
+            var hasDbUser = await _context.Users.AnyAsync(i => i.Id != userId && i.Auth0Id == userDto.Auth0Id);
+
+            if (hasDbUser)
+            {
+                throw new RequestedResourceHasConflictException();
             }
 
             _mapper.Map(userDto, dbUser);
