@@ -30,13 +30,6 @@ namespace WebAPI.Controllers
 
                 result = new OkObjectResult(userDto);
             }
-            catch (RequestedResourceNotFoundException)
-            {
-                result = new NotFoundObjectResult(new
-                {
-                    Message = "User doesn't find"
-                });
-            }
             catch (Exception ex)
             {
                 result = new BadRequestObjectResult(new
@@ -59,7 +52,14 @@ namespace WebAPI.Controllers
 
                 result = new OkObjectResult(userDto);
             }
-            catch(RequestedResourceNotFoundException)
+            catch (RequestedResourceNotFoundException)
+            {
+                result = new NotFoundObjectResult(new
+                {
+                    Message = "User doesn't find"
+                });
+            }
+            catch (RequestedResourceNotFoundException)
             {
                 result = new BadRequestObjectResult(new
                 {
