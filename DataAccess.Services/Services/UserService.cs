@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.Interfaces;
+using DataAccess.Services.Exceptions;
 using DataAccess.Services.Interfaces;
 using DataAccess.Services.Models;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,13 @@ namespace DataAccess.Services.Services
             _mapper = mapper;
         }
 
-
         public async Task<UserDto> CreateUserAsync(UpdateUserDto userDto)
         {
             if (userDto == null) throw new ArgumentNullException(nameof(userDto));
 
             var userDb = _mapper.Map<DbUser>(userDto);
+
+            _context.Users.Add(userDb);
 
             await _context.SaveChangesAsync();
 
@@ -40,7 +42,7 @@ namespace DataAccess.Services.Services
 
             if (userDb == null)
             {
-                throw new ArgumentException($"User {userId} don't find");
+                throw new RequestedResourceNotFoundException();
             }
 
             _mapper.Map(userDto, userDb);
@@ -56,7 +58,7 @@ namespace DataAccess.Services.Services
 
             if (userDb == null)
             {
-                throw new ArgumentException($"User {userId} dones't find");
+                throw new RequestedResourceNotFoundException();
             }
 
             _context.Users.Remove(userDb);
@@ -68,14 +70,24 @@ namespace DataAccess.Services.Services
         {
             var userDb = await _context.Users.FirstOrDefaultAsync(i => i.Id == userId);
 
-            return userDb != null ? _mapper.Map<UserDto>(userDb) : null;
+            if (userDb == null)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            return _mapper.Map<UserDto>(userDb);
         }
 
         public async Task<UserDto> FindUserByAuth0IdAsync(string userAuth0Id)
         {
             var userDb = await _context.Users.FirstOrDefaultAsync(i => i.Auth0Id == userAuth0Id);
 
-            return userDb != null ? _mapper.Map<UserDto>(userDb) : null;
+            if (userDb == null)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            return _mapper.Map<UserDto>(userDb);
         }
     }
 }

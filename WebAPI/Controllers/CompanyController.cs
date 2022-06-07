@@ -7,34 +7,56 @@ using WebAPI.Constants;
 
 namespace WebAPI.Controllers
 {
-    [Route(RoutersConstants.Users)]
+    [Route(RoutersConstants.Companies)]
     [ApiController]
     [Authorize]
-    public class AccountController : ControllerBase
+    public class CompanyController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly ICompanyService _companyService;
 
-        public AccountController(IUserService userService)
+        public CompanyController(ICompanyService companyService)
         {
-            _userService = userService;
+            _companyService = companyService;
         }
 
-        [HttpGet("{userAuth0Id}")]
-        public async Task<IActionResult> GetUserAsync(string userAuth0Id)
+        [HttpGet]
+        public async Task<IActionResult> GetCompaniesAsync()
         {
             IActionResult result;
 
             try
             {
-                var userDto = await _userService.FindUserByAuth0IdAsync(userAuth0Id);
+                var companiesDto = await _companyService.GetCompanies();
 
-                result = new OkObjectResult(userDto);
+                result = new OkObjectResult(companiesDto);
+            }
+            catch (Exception ex)
+            {
+                result = new BadRequestObjectResult(new
+                {
+                    Message = ex.Message
+                });
+            }
+
+            return result;
+        }
+
+        [HttpGet("{companyId:int}")]
+        public async Task<IActionResult> GetCompanyAsync(int companyId)
+        {
+            IActionResult result = null;
+
+            try
+            {
+                var companyDto = await _companyService.FindCompanyByIdCompanyAsync(companyId);
+
+                result = new OkObjectResult(companyDto);
             }
             catch (RequestedResourceNotFoundException)
             {
                 result = new NotFoundObjectResult(new
                 {
-                    Message = "User doesn't find"
+                    Message = "Company doesn't find"
                 });
             }
             catch (Exception ex)
@@ -49,17 +71,17 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync(UpdateUserDto updateUserDto)
+        public async Task<IActionResult> CreateCompanyAsync(UpdateCompanyDto updateCompanyDto)
         {
             IActionResult result;
 
             try
             {
-                var userDto = await _userService.CreateUserAsync(updateUserDto);
+                var companyDto = await _companyService.CreateCompanyAsync(updateCompanyDto);
 
-                result = new OkObjectResult(userDto);
+                result = new OkObjectResult(companyDto);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = new BadRequestObjectResult(new
                 {
@@ -70,22 +92,22 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        [HttpPut("{userId:int}")]
-        public async Task<IActionResult> UpdateUserAsync(int userId, UpdateUserDto updateUserDto)
+        [HttpPut("{companyId:int}")]
+        public async Task<IActionResult> UpdateCompanyAsync(int companyId, UpdateCompanyDto updateCompanyDto)
         {
             IActionResult result;
 
             try
             {
-                var userDto = await _userService.UpdateUserAsync(userId, updateUserDto);
+                var companyDto = await _companyService.UpdateCompanyAsync(companyId, updateCompanyDto);
 
-                result = new OkObjectResult(userDto);
+                result = new OkObjectResult(companyDto);
             }
             catch (RequestedResourceNotFoundException)
             {
                 result = new NotFoundObjectResult(new
                 {
-                    Message = "User doesn't find"
+                    Message = "Company doesn't find"
                 });
             }
             catch (Exception ex)
@@ -99,14 +121,14 @@ namespace WebAPI.Controllers
             return result;
         }
 
-        [HttpDelete("{userId:int}")]
-        public async Task<IActionResult> DeleteUserAsync(int userId)
+        [HttpDelete("{companyId:int}")]
+        public async Task<IActionResult> DeleteCompanyAsync(int companyId)
         {
             IActionResult result;
 
             try
             {
-                await _userService.DeleteUserAsync(userId);
+                await _companyService.DeleteCompanyAsync(companyId);
 
                 result = new OkResult();
             }
@@ -114,7 +136,7 @@ namespace WebAPI.Controllers
             {
                 result = new NotFoundObjectResult(new
                 {
-                    Message = "User doesn't find"
+                    Message = "Company doesn't find"
                 });
             }
             catch (Exception ex)

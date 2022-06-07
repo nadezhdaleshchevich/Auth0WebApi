@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DataAccess.Interfaces;
+using DataAccess.Services.Exceptions;
 using DataAccess.Services.Interfaces;
 using DataAccess.Services.Models;
 using Microsoft.EntityFrameworkCore;
@@ -44,14 +45,14 @@ namespace DataAccess.Services.Services
 
             if (companyDb == null)
             {
-                throw new ArgumentException($"Company {companyId} doesn't find");
+                throw new RequestedResourceNotFoundException();
             }
 
             _mapper.Map(companyDto, companyDb);
 
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<CompanyDto>(companyDto);
+            return _mapper.Map<CompanyDto>(companyDb);
         }
 
         public async Task DeleteCompanyAsync(int companyId)
@@ -60,7 +61,7 @@ namespace DataAccess.Services.Services
 
             if (companyDb == null)
             {
-                throw new ArgumentException($"Company {companyId} doesn't find");
+                throw new RequestedResourceNotFoundException();
             }
 
             _context.Companies.Remove(companyDb);
@@ -72,7 +73,12 @@ namespace DataAccess.Services.Services
         {
             var companyDb = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
 
-            return companyDb == null ? (CompanyDto)_mapper.Map<CompanyDto>(companyDb) : null;
+            if (companyDb == null)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
+            return _mapper.Map<CompanyDto>(companyDb);
         }
     }
 }
