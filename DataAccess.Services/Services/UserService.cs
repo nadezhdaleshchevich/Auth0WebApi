@@ -25,6 +25,13 @@ namespace DataAccess.Services.Services
         {
             if (userDto == null) throw new ArgumentNullException(nameof(userDto));
 
+            var dbUsers = await _context.Users.Where(i => i.Auth0Id == userDto.Auth0Id).ToArrayAsync();
+
+            if (dbUsers.Length != 0)
+            {
+                throw new RequestedResourceNotFoundException();
+            }
+
             var userDb = _mapper.Map<DbUser>(userDto);
 
             _context.Users.Add(userDb);

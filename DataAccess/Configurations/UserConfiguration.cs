@@ -9,11 +9,12 @@ namespace DataAccess.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("users");
-            builder.HasKey(i => i.Id);
+            builder.HasKey(i => new {i.Id, i.Auth0Id});
             builder.HasIndex(i => i.Id);
+            builder.HasIndex(i => i.Auth0Id).IsUnique();
             builder.HasOne(i => i.Company).WithMany(i => i.Users).HasForeignKey(i => i.CompanyId);
             builder.Property(i => i.Id).HasColumnType("int").HasColumnName("user_id").ValueGeneratedOnAdd().IsRequired();
-            builder.Property(i => i.Auth0Id).HasColumnType("varchar(max)").HasColumnName("user_auth0_id").IsRequired(false);
+            builder.Property(i => i.Auth0Id).HasColumnType("varchar").HasColumnName("user_auth0_id").HasMaxLength(100).IsRequired();
             builder.Property(i => i.FirstName).HasColumnType("varchar").HasColumnName("user_first_name").HasMaxLength(100).IsRequired();
             builder.Property(i => i.LastName).HasColumnType("varchar").HasColumnName("_user_last_name").HasMaxLength(100).IsRequired();
             builder.Property(i => i.Email).HasColumnType("varchar(max)").HasColumnName("user_email").IsRequired(false);

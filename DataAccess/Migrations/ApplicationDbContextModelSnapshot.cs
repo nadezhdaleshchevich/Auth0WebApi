@@ -54,7 +54,8 @@ namespace DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Auth0Id")
-                        .HasColumnType("varchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
                         .HasColumnName("user_auth0_id");
 
                     b.Property<int?>("CompanyId")
@@ -77,7 +78,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("_user_last_name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "Auth0Id");
+
+                    b.HasIndex("Auth0Id")
+                        .IsUnique();
 
                     b.HasIndex("CompanyId");
 

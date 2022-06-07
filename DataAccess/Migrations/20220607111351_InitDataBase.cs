@@ -27,7 +27,7 @@ namespace DataAccess.Migrations
                 {
                     user_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    user_auth0_id = table.Column<string>(type: "varchar(max)", nullable: true),
+                    user_auth0_id = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     user_first_name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     _user_last_name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     user_email = table.Column<string>(type: "varchar(max)", nullable: true),
@@ -35,7 +35,7 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.user_id);
+                    table.PrimaryKey("PK_users", x => new { x.user_id, x.user_auth0_id });
                     table.ForeignKey(
                         name: "FK_users_companies__user_company_id",
                         column: x => x._user_company_id,
@@ -52,6 +52,12 @@ namespace DataAccess.Migrations
                 name: "IX_users__user_company_id",
                 table: "users",
                 column: "_user_company_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_users_user_auth0_id",
+                table: "users",
+                column: "user_auth0_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_users_user_id",
