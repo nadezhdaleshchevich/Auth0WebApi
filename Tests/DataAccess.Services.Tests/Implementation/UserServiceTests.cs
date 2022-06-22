@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DataAccess.Services.Exceptions;
 using DataAccess.Services.MapProfiles;
 using DataAccess.Services.Models;
+using DataAccess.Services.Tests.Data.Extensions;
 using DataAccess.Services.Tests.Extensions;
 using DbUser = DataAccess.Models.User;
 using DbCompany = DataAccess.Models.Company;

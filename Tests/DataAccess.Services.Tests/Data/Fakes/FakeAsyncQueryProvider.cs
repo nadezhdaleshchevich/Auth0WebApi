@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace DataAccess.Services.Tests.Fakes
+namespace DataAccess.Services.Tests.Data.Fakes
 {
     public class FakeAsyncQueryProvider<TEntity> : IAsyncQueryProvider
     {

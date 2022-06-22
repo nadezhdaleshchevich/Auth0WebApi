@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using DataAccess.Services.Tests.Fakes;
+using DataAccess.Services.Tests.Data.Fakes;
 using Moq.Language;
 using Moq.Language.Flow;
 
-namespace DataAccess.Services.Tests.Extensions
+namespace DataAccess.Services.Tests.Data.Extensions
 {
     public static class MockExtensions
     {

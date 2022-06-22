@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataAccess.Services.Tests.Fakes;
+using DataAccess.Services.Tests.Data.Fakes;
 
-namespace DataAccess.Services.Tests.Extensions
+namespace DataAccess.Services.Tests.Data.Extensions
 {
     public static class AsyncEnumerableExtensions
     {

@@ -14,7 +14,7 @@ namespace DataAccess.Services.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICompanyService, CompanyService>();
 
-            services.AddAutoMapper(cfg => cfg.AddMaps(new []
+            services.AddAutoMapper(cfg => cfg.AddMaps(new[]
                 {
                     typeof(DataAccessServicesMapProfile)
                 }));

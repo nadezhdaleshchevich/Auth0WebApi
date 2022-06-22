@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DataAccess.Services.Tests.Fakes
+namespace DataAccess.Services.Tests.Data.Fakes
 {
     public class FakeIAsyncEnumerator<TEntity> : IAsyncEnumerator<TEntity>
     {

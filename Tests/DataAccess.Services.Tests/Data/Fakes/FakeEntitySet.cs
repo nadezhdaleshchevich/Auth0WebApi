@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DataAccess.Services.Tests.Extensions;
+using DataAccess.Services.Tests.Data.Extensions;
 
-
-namespace DataAccess.Services.Tests.Fakes
+namespace DataAccess.Services.Tests.Data.Fakes
 {
     internal class FakeEntitySet<TEntity> : EntitySetBase<TEntity>, IAsyncEnumerable<TEntity>
         where TEntity : class

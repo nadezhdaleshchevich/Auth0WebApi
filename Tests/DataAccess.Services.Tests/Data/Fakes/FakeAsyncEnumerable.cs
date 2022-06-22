@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 
-namespace DataAccess.Services.Tests.Fakes
+namespace DataAccess.Services.Tests.Data.Fakes
 {
     public class FakeAsyncEnumerable<TEntity> : EnumerableQuery<TEntity>, IAsyncEnumerable<TEntity>, IQueryable<TEntity>
     {

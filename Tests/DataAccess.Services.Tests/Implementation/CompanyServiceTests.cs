@@ -8,6 +8,7 @@ using DataAccess.Services.Exceptions;
 using DataAccess.Services.Implementation;
 using DataAccess.Services.MapProfiles;
 using DataAccess.Services.Models;
+using DataAccess.Services.Tests.Data.Extensions;
 using DataAccess.Services.Tests.Extensions;
 using Moq;
 using NUnit.Framework;
