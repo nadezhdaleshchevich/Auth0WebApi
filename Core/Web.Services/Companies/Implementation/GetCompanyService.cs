@@ -2,7 +2,7 @@
 using DataAccess.Services.Interfaces;
 using Web.Services.Companies.Constants;
 using Web.Services.Companies.Interfaces;
-using Web.Services.Exceptions;
+using Web.Services.Extensions;
 using Web.Services.Models;
 
 namespace Web.Services.Companies.Implementation
@@ -23,7 +23,7 @@ namespace Web.Services.Companies.Implementation
             try
             {
 
-                var companiesDto = await _companyService.GetCompanies();
+                var companiesDto = await _companyService.GetCompaniesAsync();
 
                 result.OkResult(companiesDto);
             }

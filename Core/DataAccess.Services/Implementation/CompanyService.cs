@@ -21,17 +21,17 @@ namespace DataAccess.Services.Implementation
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<IEnumerable<CompanyDto>> GetCompanies()
+        public async Task<IEnumerable<CompanyDto>> GetCompaniesAsync()
         {
             return await _context.Companies.Select(i => _mapper.Map<CompanyDto>(i)).ToArrayAsync();
         }
 
         public async Task<CompanyDto> CreateCompanyAsync(UpdateCompanyDto companyDto)
         {
+            if (companyDto == null) throw new ArgumentNullException(nameof(companyDto));
+
             var dbCompany = _mapper.Map<Company>(companyDto);
-
             _context.Companies.Add(dbCompany);
-
             await _context.SaveChangesAsync();
 
             return _mapper.Map<CompanyDto>(dbCompany);
@@ -41,7 +41,9 @@ namespace DataAccess.Services.Implementation
         {
             if (companyDto == null) throw new ArgumentNullException(nameof(companyDto));
 
-            var dbCompany = await _context.Companies.FirstOrDefaultAsync(i => i.Id == companyId);
+            var companies = _context.Companies;
+
+            var dbCompany = await companies.FirstOrDefaultAsync(i => i.Id == companyId);
 
             if (dbCompany == null)
             {

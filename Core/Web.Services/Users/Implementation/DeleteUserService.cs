@@ -1,35 +1,34 @@
 ﻿using DataAccess.Services.Exceptions;
 using DataAccess.Services.Interfaces;
-using DataAccess.Services.Models;
-using Web.Services.Exceptions;
+using Web.Services.Extensions;
 using Web.Services.Models;
 using Web.Services.Users.Constants;
 using Web.Services.Users.Interfaces;
 
 namespace Web.Services.Users.Implementation
 {
-    internal class CreateUserService : ICreateUserService
+    internal class DeleteUserService : IDeleteUserService
     {
         private readonly IUserService _userService;
 
-        public CreateUserService(IUserService userService)
+        public DeleteUserService(IUserService userService)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        public async Task<ActionResult> CreateUserAsync(UpdateUserDto updateUserDto)
+        public async Task<ActionResult> DeleteUserAsync(int userId)
         {
             var result = new ActionResult();
 
             try
             {
-                var userDto = await _userService.CreateUserAsync(updateUserDto);
+                await _userService.DeleteUserAsync(userId);
 
-                result.CreatedResult(userDto);
+                result.OkResult();
             }
-            catch (RequestedResourceHasConflictException)
+            catch (RequestedResourceNotFoundException)
             {
-                result.BadRequestResult(UsersConstants.UserExistsErrorMessage);
+                result.NotFoundResult(UsersConstants.UserDoesNotFindErrorMessage);
             }
             catch (Exception ex)
             {

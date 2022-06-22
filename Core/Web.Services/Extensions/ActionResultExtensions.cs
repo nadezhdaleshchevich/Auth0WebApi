@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using Web.Services.Models;
 
-namespace Web.Services.Exceptions
+namespace Web.Services.Extensions
 {
-    internal static class ActionResultExceptions
+    internal static class ActionResultExtensions
     {
         public static void OkResult(this ActionResult actionResult, Object obj = null)
         {

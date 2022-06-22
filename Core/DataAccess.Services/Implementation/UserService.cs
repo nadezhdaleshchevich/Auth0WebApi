@@ -17,8 +17,8 @@ namespace DataAccess.Services.Implementation
             IUserContext context,
             IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<UserDto> CreateUserAsync(UpdateUserDto userDto)
@@ -94,6 +94,8 @@ namespace DataAccess.Services.Implementation
 
         public async Task<UserDto> FindUserByAuth0IdAsync(string userAuth0Id)
         {
+            if (string.IsNullOrEmpty(userAuth0Id)) throw new ArgumentNullException(nameof(userAuth0Id));
+ 
             var dbUser = await _context.Users.FirstOrDefaultAsync(i => i.Auth0Id == userAuth0Id);
 
             if (dbUser == null)

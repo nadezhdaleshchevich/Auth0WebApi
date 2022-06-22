@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3AD9C9AF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FE42C37F-B66E-4F03-BAF5-122C539EB8B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.Services.Tests", "DataAccess.Services.Tests\DataAccess.Services.Tests.csproj", "{0DF07F67-E9FA-42E4-B858-A87EE9FA32BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.Services.Tests", "Tests\DataAccess.Services.Tests\DataAccess.Services.Tests.csproj", "{0DF07F67-E9FA-42E4-B858-A87EE9FA32BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Services", "Web.Services\Web.Services.csproj", "{98F12B4A-EDBF-4825-B8FB-7B1BE4C46DB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.Services", "Core\Web.Services\Web.Services.csproj", "{98F12B4A-EDBF-4825-B8FB-7B1BE4C46DB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

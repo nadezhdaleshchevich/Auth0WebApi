@@ -1,6 +1,6 @@
 using DataAccess.Extensions;
 using DataAccess.Services.Extensions;
-using Web.Services.Exceptions;
+using Web.Services.Extensions;
 using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

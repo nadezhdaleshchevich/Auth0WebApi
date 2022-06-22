@@ -2,7 +2,7 @@
 using Web.Services.Companies.Exceptions;
 using Web.Services.Users.Exceptions;
 
-namespace Web.Services.Exceptions
+namespace Web.Services.Extensions
 {
     public static class WebServicesRegisterTypes
     {

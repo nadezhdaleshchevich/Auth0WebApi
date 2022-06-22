@@ -1,30 +1,31 @@
 ﻿using DataAccess.Services.Exceptions;
 using DataAccess.Services.Interfaces;
+using DataAccess.Services.Models;
 using Web.Services.Companies.Constants;
 using Web.Services.Companies.Interfaces;
-using Web.Services.Exceptions;
+using Web.Services.Extensions;
 using Web.Services.Models;
 
 namespace Web.Services.Companies.Implementation
 {
-    internal class DeleteCompanyService : IDeleteCompanyService
+    internal class UpdateCompanyService : IUpdateCompanyService
     {
         private readonly ICompanyService _companyService;
 
-        public DeleteCompanyService(ICompanyService companyService)
+        public UpdateCompanyService(ICompanyService companyService)
         {
             _companyService = companyService ?? throw new ArgumentNullException(nameof(companyService));
         }
 
-        public async Task<ActionResult> DeleteCompanyAsync(int companyId)
+        public async Task<ActionResult> UpdateCompanyAsync(int companyId, UpdateCompanyDto updateCompanyDto)
         {
             var result = new ActionResult();
 
             try
             {
-                await _companyService.DeleteCompanyAsync(companyId);
+                var companyDto = await _companyService.UpdateCompanyAsync(companyId, updateCompanyDto);
 
-                result.OkResult();
+                result.OkResult(companyDto);
             }
             catch (RequestedResourceNotFoundException)
             {

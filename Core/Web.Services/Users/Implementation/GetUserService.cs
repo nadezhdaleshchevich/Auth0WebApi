@@ -1,6 +1,6 @@
 ﻿using DataAccess.Services.Exceptions;
 using DataAccess.Services.Interfaces;
-using Web.Services.Exceptions;
+using Web.Services.Extensions;
 using Web.Services.Models;
 using Web.Services.Users.Constants;
 using Web.Services.Users.Interfaces;

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Moq;
+﻿using System.Collections.Generic;
+using DataAccess.Services.Tests.Fakes;
+using Moq.Language;
 using Moq.Language.Flow;
 
-namespace DataAccess.Services.Tests
+namespace DataAccess.Services.Tests.Extensions
 {
     public static class MockExtensions
     {
@@ -15,11 +14,10 @@ namespace DataAccess.Services.Tests
             return setup.Returns(new FakeEntitySet<TResult>(items));
         }
 
-        public static IReturnsResult<TMock> SetupEntitySet<TMock, TResult>(this Mock<TMock> mock, Expression<Func<TMock, IEntitySet<TResult>>> expression, IList<TResult> items)
-            where TMock : Mock<TMock>
+        public static ISetupSequentialResult<IEntitySet<TResult>> ReturnsEntitySet<TResult>(this ISetupSequentialResult<IEntitySet<TResult>> setup, IList<TResult> items)
             where TResult : class
         {
-            return mock.Setup(expression).Returns(new FakeEntitySet<TResult>(items));
+            return setup.Returns(new FakeEntitySet<TResult>(items));
         }
     }
 }

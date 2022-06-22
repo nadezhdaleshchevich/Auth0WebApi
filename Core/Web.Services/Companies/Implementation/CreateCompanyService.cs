@@ -1,7 +1,7 @@
 ﻿using DataAccess.Services.Interfaces;
 using DataAccess.Services.Models;
 using Web.Services.Companies.Interfaces;
-using Web.Services.Exceptions;
+using Web.Services.Extensions;
 using Web.Services.Models;
 
 namespace Web.Services.Companies.Implementation
