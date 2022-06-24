@@ -36,6 +36,16 @@ namespace DataAccess.Services.Tests.Extensions
         }
 
         [Test]
+        public void LoadDataAccessServicesTypes_NumberOfServices()
+        {
+            var services = new ServiceCollection();
+
+            services.LoadDataAccessServicesTypes();
+
+            Assert.AreEqual(10, services.Count);
+        }
+
+        [Test]
         public void LoadDataAccessServicesTypes_AllTypesAreLoaded()
         {
             _services.LoadDataAccessServicesTypes();
@@ -50,16 +60,5 @@ namespace DataAccess.Services.Tests.Extensions
             Assert.NotNull(service2);
             Assert.NotNull(service3);
         }
-
-        [Test]
-        public void LoadDataAccessServicesTypes_NumberOfServices()
-        {
-            var services = new ServiceCollection();
-
-            services.LoadDataAccessServicesTypes();
-
-            Assert.AreEqual(10, services.Count);
-        }
-
     }
 }
